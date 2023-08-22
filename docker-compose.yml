@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  # Serviço do aplicativo Lumen
+  app:
+    container_name: app_lumen
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+
+  # Serviço do banco de dados MySQL
+  db:
+    container_name: db_mysql
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: CF_password@123
+      MYSQL_DATABASE: api_pastelaria
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  #Servico do mailhog
+  mailhog:
+     image: mailhog/mailhog:latest
+     restart: always
+     ports:
+       - "1025:1025"
+       - "8025:8025"
